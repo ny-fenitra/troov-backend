@@ -9,7 +9,9 @@
     "build": "rm -rf build/* && tsc",
     "start": "node build/index",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,scss}\"",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx,.json,.md src"
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx,.json,.md src",
+    "lint-staged": "lint-staged",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "nifenitr@gmail.com",
@@ -21,6 +23,8 @@
     "@typescript-eslint/eslint-plugin": "^5.42.0",
     "@typescript-eslint/parser": "^5.42.0",
     "eslint": "^8.26.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.6",
     "nodemon": "^3.1.3",
     "prettier": "^3.3.2",
     "ts-node": "^10.9.2",
