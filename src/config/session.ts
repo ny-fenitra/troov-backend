@@ -1,6 +1,16 @@
 import { Application } from 'express';
 import session from 'express-session';
 
+import { User } from '../shared/models/UserModel';
+
+declare module 'express-session' {
+    export interface SessionData {
+        userAttempt: number;
+        user: User;
+        accessToken: string;
+    }
+}
+
 export default (app: Application) => {
     const sessionMiddleware = session({
         secret: process.env.SECRET_SESSION as string,

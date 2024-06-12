@@ -5,6 +5,8 @@ import connectDB from './config/database';
 import sessionConfig from './config/session';
 import corsConfig from './config/cors';
 
+import authRouter from './modules/auth/router';
+
 dotenv.config();
 
 const serve = async () => {
@@ -17,6 +19,8 @@ const serve = async () => {
 
         corsConfig(app);
         sessionConfig(app);
+
+        app.use('/api', authRouter);
 
         app.get('*', (req, res) => {
             return res.redirect(process.env.APP_FRONTEND_HOST as string);
