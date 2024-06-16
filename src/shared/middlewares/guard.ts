@@ -21,7 +21,6 @@ export default (req: Request, res: Response, next: NextFunction) => {
         }
 
         if (req.session.accessToken && req.session.accessToken === token) {
-            console.log(req.session.user);
             const user = await UserModel.findById(req.session.user?._id);
 
             if (!user) {
