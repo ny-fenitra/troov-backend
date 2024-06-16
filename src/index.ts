@@ -2,6 +2,10 @@ import express from 'express';
 import dotenv from 'dotenv';
 
 import connectDB from './config/database';
+import sessionConfig from './config/session';
+import corsConfig from './config/cors';
+
+import authRouter from './modules/auth/router';
 
 dotenv.config();
 
@@ -11,11 +15,15 @@ const serve = async () => {
 
         // Initialize Express app
         const app = express();
+        app.use(express.json(), express.urlencoded({ extended: true }));
 
-        app.use(express.json());
+        corsConfig(app);
+        sessionConfig(app);
+
+        app.use('/api', authRouter);
 
         app.get('*', (req, res) => {
-            res.send('Hello World');
+            return res.redirect(process.env.APP_FRONTEND_HOST as string);
         });
 
         const port = process.env.APP_PORT || 3000;
