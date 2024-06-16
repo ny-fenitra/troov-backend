@@ -6,6 +6,7 @@ import sessionConfig from './config/session';
 import corsConfig from './config/cors';
 
 import authRouter from './modules/auth/router';
+import userRouter from './modules/user/routes';
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ const serve = async () => {
         sessionConfig(app);
 
         app.use('/api', authRouter);
+        app.use('/api/users', userRouter);
 
         app.get('*', (req, res) => {
             return res.redirect(process.env.APP_FRONTEND_HOST as string);

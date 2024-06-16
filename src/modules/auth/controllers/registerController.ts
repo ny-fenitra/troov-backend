@@ -4,27 +4,7 @@ import { body, validationResult } from 'express-validator';
 import UserModel from '../../../shared/models/UserModel';
 
 import { generateAccessToken } from '../services/generateTokenService';
-
-const isEmailUnique = async (value: string) => {
-    try {
-        const user = await UserModel.findOne({ email: value });
-
-        if (user) {
-            return Promise.reject('Email already exists');
-        }
-    } catch (err) {
-        console.error('Error in checking email uniqueness:', err);
-        throw new Error('Server error');
-    }
-};
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const passwordsMatch = (value: string, meta: any) => {
-    if (value !== meta.req.body.password) {
-        throw new Error('Passwords do not match');
-    }
-    return true;
-};
+import { isEmailUnique, passwordsMatch } from '../../../shared/utils/helpers';
 
 export const registerValidator = [
     body('firstname').notEmpty().withMessage('Firstname is required'),

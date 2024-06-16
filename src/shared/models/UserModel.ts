@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 
 import { RoleEnum } from '../utils/enums';
 
-interface UserInterface {
+export interface UserInterface {
     firstname: string;
     lastname: string;
     email: string;
@@ -11,7 +11,7 @@ interface UserInterface {
     role: RoleEnum;
 }
 
-interface UserMethodsInterface {
+export interface UserMethodsInterface {
     comparePassword(password: string): Promise<boolean>;
 }
 
