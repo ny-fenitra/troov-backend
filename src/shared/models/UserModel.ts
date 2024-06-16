@@ -40,11 +40,12 @@ schema.methods.comparePassword = async function (password: string) {
     return await bcrypt.compare(password, this.password);
 };
 
-schema.methods.toJSON = function () {
-    const obj = this.toObject();
-    delete obj.password;
-    return obj;
-};
+schema.set('toJSON', {
+    transform: function (doc, ret) {
+        delete ret['password'];
+        return ret;
+    },
+});
 
 export type User = HydratedDocument<UserInterface & UserMethodsInterface>;
 

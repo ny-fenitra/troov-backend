@@ -54,7 +54,7 @@ export default async (req: Request, res: Response) => {
             await user.save();
 
             const accessToken = await generateAccessToken(req, user);
-            return res.status(200).json({ success: true, accessToken, user: user.toJSON() });
+            return res.status(200).json({ success: true, accessToken, user });
         } catch (error) {
             res.status(500).json({ msg: 'Internal error!' });
             throw error;
