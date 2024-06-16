@@ -7,6 +7,7 @@ import corsConfig from './config/cors';
 
 import authRouter from './modules/auth/router';
 import userRouter from './modules/user/routes';
+import objectRouter from './modules/object/routes';
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ const serve = async () => {
 
         app.use('/api', authRouter);
         app.use('/api/users', userRouter);
+        app.use('/api/objects', objectRouter);
 
         app.get('*', (req, res) => {
             return res.redirect(process.env.APP_FRONTEND_HOST as string);
