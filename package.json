@@ -11,7 +11,8 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,scss}\"",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx,.json,.md src",
     "lint-staged": "lint-staged",
-    "prepare": "husky"
+    "prepare": "husky",
+    "db:seed": "ts-node src/commands/seeder.ts"
   },
   "keywords": [],
   "author": "nifenitr@gmail.com",

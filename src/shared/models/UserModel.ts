@@ -1,11 +1,14 @@
 import { model, Schema, HydratedDocument } from 'mongoose';
 import bcrypt from 'bcrypt';
 
+import { RoleEnum } from '../utils/enums';
+
 interface UserInterface {
     firstname: string;
     lastname: string;
     email: string;
     password: string;
+    role: RoleEnum;
 }
 
 interface UserMethodsInterface {
@@ -18,6 +21,7 @@ const schema = new Schema<UserInterface & UserMethodsInterface>(
         lastname: { type: String, required: true, minlength: 3, maxlength: 255 },
         email: { type: String, required: true, unique: true },
         password: { type: String, required: true, select: false },
+        role: { type: String, required: true, enum: Object.values(RoleEnum), default: RoleEnum.CLIENT },
     },
     { timestamps: true },
 );
