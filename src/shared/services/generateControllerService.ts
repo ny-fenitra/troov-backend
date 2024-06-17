@@ -30,7 +30,7 @@ const generateControllerService = <T>(Model: Model<T>) => {
             });
         } catch (err) {
             console.log(err);
-            return res.status(500).json({ message: 'Internal server error' });
+            return res.status(500).json({ msg: 'Internal server error' });
         }
     };
 
@@ -40,13 +40,13 @@ const generateControllerService = <T>(Model: Model<T>) => {
             const item = await Model.findById(req.params.id);
 
             if (!item) {
-                return res.status(404).json({ message: 'Item not found' });
+                return res.status(404).json({ msg: 'Item not found' });
             }
 
-            return res.json(item);
+            return res.status(200).json({ success: true, item });
         } catch (err) {
             console.log(err);
-            return res.status(500).json({ message: 'Internal server error' });
+            return res.status(500).json({ msg: 'Internal server error' });
         }
     };
 
@@ -59,10 +59,10 @@ const generateControllerService = <T>(Model: Model<T>) => {
 
             try {
                 const newItem = await item.save();
-                return res.status(201).json(newItem);
+                return res.status(201).json({ success: true, item: newItem });
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (err: any) {
-                return res.status(400).json({ message: err.message });
+                return res.status(400).json({ msg: err.message });
             }
         }
 
@@ -78,17 +78,17 @@ const generateControllerService = <T>(Model: Model<T>) => {
                 const item = await Model.findById(req.params.id);
 
                 if (!item) {
-                    return res.status(404).json({ message: 'Item not found' });
+                    return res.status(404).json({ msg: 'Item not found' });
                 }
 
                 Object.assign(item, req.body);
 
                 const updateItem = await item?.save();
 
-                return res.json(updateItem);
+                return res.status(200).json({ success: true, item: updateItem });
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (err: any) {
-                return res.status(400).json({ message: err.message });
+                return res.status(400).json({ msg: err.message });
             }
         }
 
@@ -106,10 +106,10 @@ const generateControllerService = <T>(Model: Model<T>) => {
 
             await Model.deleteOne({ _id: item._id });
 
-            return res.json({ message: 'Item deleted successfully' });
+            return res.status(200).json({ success: true, msg: 'Item deleted successfully' });
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
-            return res.status(500).json({ message: err.message });
+            return res.status(500).json({ msg: err.message });
         }
     };
 
