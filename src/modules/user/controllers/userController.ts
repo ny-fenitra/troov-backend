@@ -1,4 +1,5 @@
-import { body } from 'express-validator';
+import { body, validationResult } from 'express-validator';
+import { Request, Response } from 'express';
 
 import UserModel, { UserInterface, UserMethodsInterface } from '../../../shared/models/UserModel';
 
@@ -37,5 +38,31 @@ export const createUserValidator = [
 export const updateUserValidator = [...userValidator];
 
 const userController = generateControllerService<UserInterface & UserMethodsInterface>(UserModel);
+
+// Override updateItem method
+userController.updateItem = async (req: Request, res: Response) => {
+    const validation = validationResult(req);
+
+    if (validation.isEmpty()) {
+        try {
+            const item = await UserModel.findById(req.params.id);
+
+            if (!item) {
+                return res.status(404).json({ message: 'Item not found' });
+            }
+
+            Object.assign(item, req.body);
+
+            const updateItem = await item?.save();
+
+            return res.status(200).json({ success: true, item: updateItem });
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
+            return res.status(400).json({ message: err.message });
+        }
+    }
+
+    return res.status(400).json({ msg: 'Validation failed', errors: validation.array() });
+};
 
 export default userController;
