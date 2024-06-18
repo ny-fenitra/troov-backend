@@ -47,6 +47,14 @@ cp .env.example .env
 
 2. Make sure to fill the environments correctly in .env
 
+### Seed database
+
+Launch seed command to add first user
+
+```sh
+yarn db:seed
+```
+
 ### Compile and Hot-Reload for Development
 
 ```sh
